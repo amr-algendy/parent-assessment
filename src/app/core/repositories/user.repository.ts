@@ -1,8 +1,11 @@
 import { Observable } from 'rxjs';
-import { UserModel } from '../domain/user.model';
+import {
+  UserModel,
+  PaginatedGetUsersResponseModel,
+} from '../domain/user.model';
 
 export interface UserRepository {
-  getUsers(pageNumber: number): Observable<UserModel[]>;
+  getUsers(pageNumber: number): Observable<PaginatedGetUsersResponseModel>;
   getUser(id: number): Observable<UserModel>;
   createUser(user: UserModel): Observable<UserModel>;
   deleteUser(id: number): Observable<boolean>;

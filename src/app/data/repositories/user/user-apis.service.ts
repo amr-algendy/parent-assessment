@@ -1,7 +1,7 @@
 import { Observable } from 'rxjs';
 import { Injectable } from '@angular/core';
 
-import { UserEntity } from './user.entity';
+import { PaginatedGetUsersResponseEntity, UserEntity } from './user.entity';
 import { HttpClient, HttpResponse } from '@angular/common/http';
 import { API_ENDPOINTS } from '../../api/endpoints';
 
@@ -11,10 +11,13 @@ import { API_ENDPOINTS } from '../../api/endpoints';
 export class UserApisService {
   constructor(private http: HttpClient) {}
 
-  getUsers(pageNumber: number): Observable<UserEntity[]> {
-    return this.http.get<UserEntity[]>(API_ENDPOINTS.GET_USERS, {
-      params: { pageNumber },
-    });
+  getUsers(pageNumber: number): Observable<PaginatedGetUsersResponseEntity> {
+    return this.http.get<PaginatedGetUsersResponseEntity>(
+      API_ENDPOINTS.GET_USERS,
+      {
+        params: { pageNumber },
+      }
+    );
   }
   getUser(id: number): Observable<UserEntity> {
     return this.http.get<UserEntity>(API_ENDPOINTS.GET_USER(id));

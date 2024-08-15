@@ -5,3 +5,10 @@ export interface UserModel {
   lastName: string;
   avatar: string;
 }
+
+export interface PaginatedGetUsersResponseModel {
+  page: number;
+  total: number;
+  totalPages: number;
+  users: UserModel[];
+}

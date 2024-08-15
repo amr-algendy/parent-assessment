@@ -1,18 +1,30 @@
 import { map, Observable } from 'rxjs';
-import { UserModel } from '../../../core/domain/user.model';
+import {
+  UserModel,
+  PaginatedGetUsersResponseModel,
+} from '../../../core/domain/user.model';
 import { UserRepository } from '../../../core/repositories/user.repository';
 import { UserApisService } from './user-apis.service';
 import { UserMapper } from './user.mapper';
+import { Injectable } from '@angular/core';
 
+@Injectable({
+  providedIn: 'root',
+})
 export class UserImplementationRepository implements UserRepository {
   private userMapper = new UserMapper();
 
   constructor(private userApisService: UserApisService) {}
 
-  getUsers(pageNumber: number): Observable<UserModel[]> {
-    return this.userApisService
-      .getUsers(pageNumber)
-      .pipe(map((users) => users.map(this.userMapper.mapFrom)));
+  getUsers(pageNumber: number): Observable<PaginatedGetUsersResponseModel> {
+    return this.userApisService.getUsers(pageNumber).pipe(
+      map((response) => ({
+        page: response.page,
+        total: response.total,
+        totalPages: response.total_pages,
+        users: response.data.map(this.userMapper.mapFrom),
+      }))
+    );
   }
   getUser(id: number): Observable<UserModel> {
     return this.userApisService.getUser(id).pipe(map(this.userMapper.mapFrom));
