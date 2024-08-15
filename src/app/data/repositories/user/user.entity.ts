@@ -1,9 +1,12 @@
-export interface UserEntity {
-  id: number;
+export interface NewUserEntity {
   email: string;
   first_name: string;
   last_name: string;
   avatar: string;
+}
+
+export interface UserEntity extends NewUserEntity {
+  id: number;
 }
 
 export interface PaginatedGetUsersResponseEntity {

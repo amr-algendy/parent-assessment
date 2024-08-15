@@ -1,7 +1,11 @@
-import { Observable } from 'rxjs';
+import { map, Observable } from 'rxjs';
 import { Injectable } from '@angular/core';
 
-import { PaginatedGetUsersResponseEntity, UserEntity } from './user.entity';
+import {
+  NewUserEntity,
+  PaginatedGetUsersResponseEntity,
+  UserEntity,
+} from './user.entity';
 import { HttpClient, HttpResponse } from '@angular/common/http';
 import { API_ENDPOINTS } from '../../api/endpoints';
 
@@ -20,9 +24,11 @@ export class UserApisService {
     );
   }
   getUser(id: number): Observable<UserEntity> {
-    return this.http.get<UserEntity>(API_ENDPOINTS.GET_USER(id));
+    return this.http
+      .get<{ data: UserEntity }>(API_ENDPOINTS.GET_USER(id))
+      .pipe(map((response) => response.data));
   }
-  createUser(user: UserEntity): Observable<UserEntity> {
+  createUser(user: NewUserEntity): Observable<UserEntity> {
     return this.http.post<UserEntity>(API_ENDPOINTS.CREATE_USER, user);
   }
   deleteUser(id: number): Observable<HttpResponse<boolean>> {

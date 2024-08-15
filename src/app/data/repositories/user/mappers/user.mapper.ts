@@ -1,6 +1,6 @@
-import { Mapper } from '../../../core/base/mapper';
-import { UserModel } from '../../../core/domain/user.model';
-import { UserEntity } from './user.entity';
+import { Mapper } from '../../../../core/base/mapper';
+import { UserModel } from '../../../../core/domain/user.model';
+import { UserEntity } from '../user.entity';
 
 export class UserMapper implements Mapper<UserEntity, UserModel> {
   mapFrom(userEntity: UserEntity): UserModel {

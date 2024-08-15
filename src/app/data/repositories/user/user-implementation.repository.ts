@@ -2,17 +2,20 @@ import { map, Observable } from 'rxjs';
 import {
   UserModel,
   PaginatedGetUsersResponseModel,
+  NewUserModel,
 } from '../../../core/domain/user.model';
 import { UserRepository } from '../../../core/repositories/user.repository';
 import { UserApisService } from './user-apis.service';
-import { UserMapper } from './user.mapper';
+import { UserMapper } from './mappers/user.mapper';
 import { Injectable } from '@angular/core';
+import { NewUserMapper } from './mappers/new-user.mapper';
 
 @Injectable({
   providedIn: 'root',
 })
 export class UserImplementationRepository implements UserRepository {
   private userMapper = new UserMapper();
+  private newUserMapper = new NewUserMapper();
 
   constructor(private userApisService: UserApisService) {}
 
@@ -29,9 +32,9 @@ export class UserImplementationRepository implements UserRepository {
   getUser(id: number): Observable<UserModel> {
     return this.userApisService.getUser(id).pipe(map(this.userMapper.mapFrom));
   }
-  createUser(user: UserModel): Observable<UserModel> {
+  createUser(user: NewUserModel): Observable<UserModel> {
     return this.userApisService
-      .createUser(this.userMapper.mapTo(user))
+      .createUser(this.newUserMapper.mapTo(user))
       .pipe(map(this.userMapper.mapFrom));
   }
   deleteUser(id: number): Observable<boolean> {

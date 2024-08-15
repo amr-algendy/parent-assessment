@@ -1,13 +1,13 @@
 import { Observable } from 'rxjs';
 
 import { UseCase } from '../base/use-case';
-import { UserModel } from '../domain/user.model';
+import { NewUserModel, UserModel } from '../domain/user.model';
 import { UserRepository } from '../repositories/user.repository';
 
-export class CreateUserUsecase implements UseCase<UserModel, UserModel> {
+export class CreateUserUsecase implements UseCase<NewUserModel, UserModel> {
   constructor(private userRepository: UserRepository) {}
 
-  execute(user: UserModel): Observable<UserModel> {
+  execute(user: NewUserModel): Observable<UserModel> {
     return this.userRepository.createUser(user);
   }
 }
