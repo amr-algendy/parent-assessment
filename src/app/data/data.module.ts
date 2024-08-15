@@ -1,14 +1,20 @@
 import { InjectionToken, NgModule } from '@angular/core';
 import { UserRepository } from '../core/repositories/user.repository';
-import { GetUsersUsecase } from '../core/usecases/get-users.usecase';
-import { GetUserUsecase } from '../core/usecases/get-user.usecase';
-import { UpdateUserUsecase } from '../core/usecases/update-user.usecase';
-import { DeleteUserUsecase } from '../core/usecases/delete-user.usecase';
-import { CreateUserUsecase } from '../core/usecases/create-user.usecase';
+import { GetUsersUsecase } from '../core/usecases/user/get-users.usecase';
+import { GetUserUsecase } from '../core/usecases/user/get-user.usecase';
+import { UpdateUserUsecase } from '../core/usecases/user/update-user.usecase';
+import { DeleteUserUsecase } from '../core/usecases/user/delete-user.usecase';
+import { CreateUserUsecase } from '../core/usecases/user/create-user.usecase';
 import { UserImplementationRepository } from './repositories/user/user-implementation.repository';
+import { AuthRepository } from '../core/repositories/auth.repository';
+import { LoginUsecase } from '../core/usecases/auth/login.usecase';
+import { AuthImplementationRepository } from './repositories/auth/auth-implementation.repository';
 
 const userRepositoryInjectionToken: InjectionToken<UserRepository> =
   new InjectionToken<UserRepository>('user repository');
+
+const authRepositoryInjectionToken: InjectionToken<AuthRepository> =
+  new InjectionToken<AuthRepository>('auth repository');
 
 const getUsersUseCaseFactory = (
   userRepository: UserRepository
@@ -55,6 +61,14 @@ export const deleteUserUseCaseProvider = {
   deps: [userRepositoryInjectionToken],
 };
 
+const loginUseCaseFactory = (authRepository: AuthRepository): LoginUsecase =>
+  new LoginUsecase(authRepository);
+export const loginUseCaseProvider = {
+  provide: LoginUsecase,
+  useFactory: loginUseCaseFactory,
+  deps: [authRepositoryInjectionToken],
+};
+
 @NgModule({
   providers: [
     getUsersUseCaseProvider,
@@ -65,6 +79,11 @@ export const deleteUserUseCaseProvider = {
     {
       provide: userRepositoryInjectionToken,
       useClass: UserImplementationRepository,
+    },
+    loginUseCaseProvider,
+    {
+      provide: authRepositoryInjectionToken,
+      useClass: AuthImplementationRepository,
     },
   ],
 })
