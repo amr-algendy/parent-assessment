@@ -1,0 +1,69 @@
+@import "../../../assets/scss/colors";
+
+.container {
+  height: calc(100vh - 56px);
+}
+.card {
+  border-radius: 0.6rem;
+  overflow: hidden;
+}
+.card-text {
+  &__title,
+  &__input {
+    color: $primary-text;
+  }
+  &__main,
+  &__form-label,
+  &__input::placeholder {
+    color: $secondary-text;
+  }
+  &__main,
+  &__form-label {
+    font-size: 16px;
+    font-weight: 200;
+  }
+  &__form-control--invalid {
+    .card-text__form-label,
+    .card-text__input::placeholder {
+      color: $error;
+    }
+    .card-text__input {
+      border-color: $error;
+    }
+    .card-text__error-text {
+      display: block;
+    }
+  }
+  &__input {
+    font-size: 14px;
+    font-weight: 200;
+  }
+  &__error-text {
+    display: none;
+    font-size: 12px;
+    color: $error;
+  }
+  &__input {
+    &:focus-visible {
+      outline-color: $primary;
+    }
+  }
+  &__link {
+    color: $primary;
+    text-decoration: none;
+  }
+  &__form-label {
+    color: $secondary-text;
+    &:has(+ * .ng-invalid.ng-touched) {
+      color: $error;
+    }
+  }
+  &__input {
+    border: 1px solid $border-color;
+  }
+  &__button {
+    background-color: $primary;
+    border: none;
+    outline: none;
+  }
+}
