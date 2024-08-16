@@ -1,0 +1,10 @@
+@import "../../../assets/scss/colors";
+
+.navbar-brand {
+  color: $primary;
+}
+.btn {
+  background-color: $primary;
+  border: 1px solid $primary;
+  outline: none;
+}
