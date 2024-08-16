@@ -5,17 +5,23 @@ import { BehaviorSubject } from 'rxjs';
   providedIn: 'root',
 })
 export class AuthService {
-  loggedIn = new BehaviorSubject<boolean>(!!localStorage.getItem('token'));
+  loggedInSubject = new BehaviorSubject<boolean>(
+    !!localStorage.getItem('token')
+  );
+
+  isLoggedIn(): boolean {
+    return !!localStorage.getItem('token');
+  }
 
   login(token: string): void {
     if (token.trim().length > 0) {
       localStorage.setItem('token', token);
-      this.loggedIn.next(true);
+      this.loggedInSubject.next(true);
     }
   }
 
   logout(): void {
     localStorage.removeItem('token');
-    this.loggedIn.next(false);
+    this.loggedInSubject.next(false);
   }
 }

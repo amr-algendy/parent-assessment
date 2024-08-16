@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { AuthRepository } from '../../../core/repositories/auth.repository';
 import { AuthApisService } from './auth-apis.service';
-import { map, Observable, tap } from 'rxjs';
+import { map, Observable, tap, of } from 'rxjs';
 import { AuthService } from './auth.service';
 
 @Injectable({ providedIn: 'root' })
@@ -18,5 +18,10 @@ export class AuthImplementationRepository implements AuthRepository {
         this.authService.login(token);
       })
     );
+  }
+
+  logout(): Observable<void> {
+    this.authService.logout();
+    return of(void 0);
   }
 }

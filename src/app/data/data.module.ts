@@ -9,6 +9,7 @@ import { UserImplementationRepository } from './repositories/user/user-implement
 import { AuthRepository } from '../core/repositories/auth.repository';
 import { LoginUsecase } from '../core/usecases/auth/login.usecase';
 import { AuthImplementationRepository } from './repositories/auth/auth-implementation.repository';
+import { LogoutUsecase } from '../core/usecases/auth/logout.usecase';
 
 const userRepositoryInjectionToken: InjectionToken<UserRepository> =
   new InjectionToken<UserRepository>('user repository');
@@ -69,6 +70,14 @@ export const loginUseCaseProvider = {
   deps: [authRepositoryInjectionToken],
 };
 
+const logoutUseCaseFactory = (authRepository: AuthRepository): LogoutUsecase =>
+  new LogoutUsecase(authRepository);
+export const logoutUseCaseProvider = {
+  provide: LogoutUsecase,
+  useFactory: logoutUseCaseFactory,
+  deps: [authRepositoryInjectionToken],
+};
+
 @NgModule({
   providers: [
     getUsersUseCaseProvider,
@@ -81,6 +90,7 @@ export const loginUseCaseProvider = {
       useClass: UserImplementationRepository,
     },
     loginUseCaseProvider,
+    logoutUseCaseProvider,
     {
       provide: authRepositoryInjectionToken,
       useClass: AuthImplementationRepository,

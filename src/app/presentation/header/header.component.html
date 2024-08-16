@@ -5,9 +5,9 @@
       <a class="nav-link active" href="#">HOME</a>
       <a class="nav-link" href="#">ABOUT</a>
       <a class="nav-link" href="#">CONTACT</a>
-      <button class="btn btn-primary rounded-pill">
+      <button class="btn btn-primary rounded-pill" (click)="buttonClicked()">
         <ng-container *ngIf="!(loggedIn$ | async)"> LOGIN </ng-container>
-        <ng-container *ngIf="loggedIn$ | async"> ENQUIRE </ng-container>
+        <ng-container *ngIf="loggedIn$ | async"> LOGOUT </ng-container>
       </button>
     </div>
   </div>
