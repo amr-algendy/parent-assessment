@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { UserModel } from '../../core/domain/user.model';
-import { NgClass } from '@angular/common';
+import { NgClass, NgStyle } from '@angular/common';
 import {
   FormControl,
   FormGroup,
@@ -11,7 +11,7 @@ import {
 @Component({
   selector: 'app-user-modal',
   standalone: true,
-  imports: [NgClass, ReactiveFormsModule],
+  imports: [NgClass, ReactiveFormsModule, NgStyle],
   templateUrl: './user-modal.component.html',
   styleUrl: './user-modal.component.scss',
 })

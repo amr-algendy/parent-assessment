@@ -8,7 +8,10 @@
     </nav>
     <div class="d-flex justify-content-between align-items-center">
       <h1 class="mb-0 page-title">Users List</h1>
-      <button class="btn btn-primary rounded-pill">
+      <button
+        class="btn btn-primary rounded-pill"
+        (click)="creatingNewUser = true"
+      >
         <i class="bi-plus-lg"></i> New User
       </button>
     </div>
@@ -33,7 +36,7 @@
             <td class="px-4">
               <img
                 class="user-avatar rounded-circle me-3"
-                [src]="user.avatar"
+                [src]="user.avatar || placeholderAvatar"
                 alt="{{ user.firstName }} {{ user.lastName }}'s picture"
               />
               <span class="user-name"
@@ -90,3 +93,9 @@
   (closeModal)="onCloseDeleteModal($event)"
 >
 </app-delete-user-modal>
+
+<app-new-user-modal
+  *ngIf="creatingNewUser"
+  (confirmCreate)="onCreateNewUser($event)"
+  (closeModal)="creatingNewUser = false"
+></app-new-user-modal>

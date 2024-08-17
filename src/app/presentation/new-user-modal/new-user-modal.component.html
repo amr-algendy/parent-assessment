@@ -9,7 +9,7 @@
         <div class="modal-body d-flex flex-column align-items-center">
           <img
             class="user-avatar rounded-circle"
-            [src]="editedUser.avatar"
+            src="assets/images/avatar-placeholder.png"
             alt=""
           />
           <ul class="p-0 w-75">
@@ -44,8 +44,4 @@
     </div>
   </div>
 </div>
-<div
-  class="backdrop"
-  [ngStyle]="{ 'pointer-events': submitted ? 'none' : 'auto' }"
-  (click)="onCancel()"
-></div>
+<div class="backdrop" (click)="onCancel()"></div>

@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { UserModel } from '../../core/domain/user.model';
+import { NewUserModel, UserModel } from '../../core/domain/user.model';
 import { GetUsersUsecase } from '../../core/usecases/user/get-users.usecase';
 import { finalize } from 'rxjs';
 import { NgFor, NgIf } from '@angular/common';
@@ -7,11 +7,19 @@ import { UserModalComponent } from '../user-modal/user-modal.component';
 import { UpdateUserUsecase } from '../../core/usecases/user/update-user.usecase';
 import { DeleteUserModalComponent } from '../delete-user-modal/delete-user-modal.component';
 import { DeleteUserUsecase } from '../../core/usecases/user/delete-user.usecase';
+import { NewUserModalComponent } from '../new-user-modal/new-user-modal.component';
+import { CreateUserUsecase } from '../../core/usecases/user/create-user.usecase';
 
 @Component({
   selector: 'app-dashboard',
   standalone: true,
-  imports: [NgIf, NgFor, UserModalComponent, DeleteUserModalComponent],
+  imports: [
+    NgIf,
+    NgFor,
+    UserModalComponent,
+    DeleteUserModalComponent,
+    NewUserModalComponent,
+  ],
   templateUrl: './dashboard.component.html',
   styleUrl: './dashboard.component.scss',
 })
@@ -19,18 +27,21 @@ export class DashboardComponent {
   users: UserModel[] = [];
 
   protected editedUserIndex = -1;
-
   protected userIndexToDelete = -1;
+  protected creatingNewUser = false;
 
   protected lastLoadedPage = 0;
   protected maxPages = 1;
 
   protected loading = false;
 
+  protected readonly placeholderAvatar = 'assets/images/avatar-placeholder.png';
+
   constructor(
     private getUsersUsecase: GetUsersUsecase,
     private updateUserUsecase: UpdateUserUsecase,
-    private deleteUserUsecase: DeleteUserUsecase
+    private deleteUserUsecase: DeleteUserUsecase,
+    private createUserUsecase: CreateUserUsecase
   ) {}
 
   ngOnInit(): void {
@@ -101,5 +112,24 @@ export class DashboardComponent {
     } else {
       this.userIndexToDelete = -1;
     }
+  }
+
+  onCreateNewUser(param: { fullName: string; job: string }): void {
+    const newUser: NewUserModel = {
+      email: '',
+      firstName: param.fullName.split(' ')[0],
+      lastName: param.fullName.replace(/^.+\s/, ''),
+      avatar: '',
+      job: param.job,
+    };
+    this.createUserUsecase.execute(newUser).subscribe({
+      next: (user) => {
+        this.users = [user, ...this.users];
+        this.creatingNewUser = false;
+      },
+      error: () => {
+        this.creatingNewUser = false;
+      },
+    });
   }
 }

@@ -2,8 +2,24 @@
   <p class="modal-text">Are you sure you want to delete</p>
   <p class="user-name">{{ user.firstName }} {{ user.lastName }}</p>
   <div class="action-buttons d-flex">
-    <button class="btn btn-primary me-2" (click)="onDelete()">Delete</button>
-    <button class="btn btn-outline-primary" (click)="onCancel()">Cancel</button>
+    <button
+      class="btn btn-primary me-2"
+      (click)="onDelete()"
+      [disabled]="submitted"
+    >
+      Delete
+    </button>
+    <button
+      class="btn btn-outline-primary"
+      (click)="onCancel()"
+      [disabled]="submitted"
+    >
+      Cancel
+    </button>
   </div>
 </div>
-<div class="backdrop" (click)="onCancel()"></div>
+<div
+  class="backdrop"
+  [ngStyle]="{ 'pointer-events': submitted ? 'none' : 'auto' }"
+  (click)="onCancel()"
+></div>
