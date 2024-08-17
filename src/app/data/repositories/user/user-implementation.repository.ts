@@ -38,9 +38,15 @@ export class UserImplementationRepository implements UserRepository {
       .pipe(map(this.userMapper.mapFrom));
   }
   deleteUser(id: number): Observable<boolean> {
-    return this.userApisService
-      .deleteUser(id)
-      .pipe(map((response) => response.status === 204));
+    return this.userApisService.deleteUser(id).pipe(
+      map((response) => {
+        if (response.status === 204) {
+          return true;
+        } else {
+          throw new Error('An error occurred while deleting');
+        }
+      })
+    );
   }
   updateUser(user: UserModel): Observable<UserModel> {
     return this.userApisService

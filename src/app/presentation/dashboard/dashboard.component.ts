@@ -9,6 +9,7 @@ import { DeleteUserModalComponent } from '../delete-user-modal/delete-user-modal
 import { DeleteUserUsecase } from '../../core/usecases/user/delete-user.usecase';
 import { NewUserModalComponent } from '../new-user-modal/new-user-modal.component';
 import { CreateUserUsecase } from '../../core/usecases/user/create-user.usecase';
+import { ToastService } from '../shared/services/toast.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -41,7 +42,8 @@ export class DashboardComponent {
     private getUsersUsecase: GetUsersUsecase,
     private updateUserUsecase: UpdateUserUsecase,
     private deleteUserUsecase: DeleteUserUsecase,
-    private createUserUsecase: CreateUserUsecase
+    private createUserUsecase: CreateUserUsecase,
+    private toastService: ToastService
   ) {}
 
   ngOnInit(): void {
@@ -85,9 +87,11 @@ export class DashboardComponent {
       next: () => {
         this.users[this.editedUserIndex] = editedUser;
         this.editedUserIndex = -1;
+        this.toastService.show('User updated successfully!', 'success');
       },
       error: () => {
         this.editedUserIndex = -1;
+        this.toastService.show('An error occurred while updating!', 'error');
       },
     });
   }
@@ -103,9 +107,11 @@ export class DashboardComponent {
       this.deleteUserUsecase.execute(userIdToDelete).subscribe({
         next: () => {
           this.users = this.users.filter((user) => user.id !== userIdToDelete);
+          this.toastService.show('User deleted successfully!', 'success');
           this.userIndexToDelete = -1;
         },
         error: () => {
+          this.toastService.show('An error occurred while deleting!', 'error');
           this.userIndexToDelete = -1;
         },
       });
@@ -125,9 +131,11 @@ export class DashboardComponent {
     this.createUserUsecase.execute(newUser).subscribe({
       next: (user) => {
         this.users = [user, ...this.users];
+        this.toastService.show('User created successfully!', 'success');
         this.creatingNewUser = false;
       },
       error: () => {
+        this.toastService.show('An error occurred while creating!', 'error');
         this.creatingNewUser = false;
       },
     });

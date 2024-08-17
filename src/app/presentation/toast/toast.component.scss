@@ -1,0 +1,17 @@
+@import "../../../assets/scss/colors";
+.custom-toast {
+  width: 350px;
+  position: fixed;
+  top: 80px;
+  right: 20px;
+  padding: 16px;
+  z-index: 5;
+}
+.success {
+  color: $success;
+  background-color: $success-background;
+}
+.error {
+  color: $error;
+  background-color: $error-background;
+}
