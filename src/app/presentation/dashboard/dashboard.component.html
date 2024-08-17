@@ -26,7 +26,10 @@
           </tr>
         </thead>
         <tbody>
-          <tr *ngFor="let user of users" class="user-row border-bottom">
+          <tr
+            *ngFor="let user of users; let idx = index"
+            class="user-row border-bottom"
+          >
             <td class="px-4">
               <img
                 class="user-avatar rounded-circle me-3"
@@ -39,7 +42,10 @@
             </td>
             <td class="px-4 action-buttons-cell">
               <div class="action-buttons">
-                <button class="btn btn-outline-primary me-1">
+                <button
+                  class="btn btn-outline-primary me-1"
+                  (click)="editUser(idx)"
+                >
                   <i class="bi-pencil-fill"></i>
                 </button>
                 <button class="btn btn-outline-primary me-1">
@@ -84,3 +90,10 @@
     </div>
   </div>
 </div>
+
+<app-user-modal
+  *ngIf="users[editedUserIndex]"
+  [editedUser]="users[editedUserIndex]"
+  (closeModal)="onCloseModal()"
+  (confirmEdit)="onConfirmEdit($event)"
+></app-user-modal>

@@ -3,6 +3,7 @@ export interface NewUserModel {
   firstName: string;
   lastName: string;
   avatar: string;
+  job?: string;
 }
 
 export interface UserModel extends NewUserModel {

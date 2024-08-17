@@ -1,0 +1,47 @@
+<div
+  class="user-modal p-3 rounded-3"
+  tabindex="-1"
+  [ngClass]="{ 'user-modal--submitted': submitted }"
+>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <form (ngSubmit)="onConfirm()" [formGroup]="userForm">
+        <div class="modal-body d-flex flex-column align-items-center">
+          <img
+            class="user-avatar rounded-circle"
+            [src]="editedUser.avatar"
+            alt=""
+          />
+          <ul class="p-0 w-75">
+            <li class="d-flex flex-column pb-1">
+              <label for="fullName">Name</label>
+              <input type="text" name="fullName" formControlName="fullName" />
+            </li>
+            <li class="d-flex flex-column pb-1">
+              <label for="job">Job</label>
+              <input type="text" name="job" formControlName="job" />
+            </li>
+          </ul>
+        </div>
+        <div class="modal-footer d-flex justify-content-center">
+          <button
+            type="button"
+            [disabled]="submitted"
+            (click)="onCancel()"
+            class="btn btn-outline-primary rounded-pill"
+          >
+            Cancel
+          </button>
+          <button
+            type="submit"
+            [disabled]="userForm.invalid || submitted"
+            class="btn btn-primary rounded-pill"
+          >
+            {{ submitted ? "Saving..." : "Save" }}
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+<div class="backdrop"></div>
