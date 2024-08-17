@@ -1,0 +1,9 @@
+<div class="delete-modal p-3 rounded-3 d-flex flex-column align-items-center">
+  <p class="modal-text">Are you sure you want to delete</p>
+  <p class="user-name">{{ user.firstName }} {{ user.lastName }}</p>
+  <div class="action-buttons d-flex">
+    <button class="btn btn-primary me-2" (click)="onDelete()">Delete</button>
+    <button class="btn btn-outline-primary" (click)="onCancel()">Cancel</button>
+  </div>
+</div>
+<div class="backdrop" (click)="onCancel()"></div>

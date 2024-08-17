@@ -19,7 +19,7 @@ export class UserApisService {
     return this.http.get<PaginatedGetUsersResponseEntity>(
       API_ENDPOINTS.GET_USERS,
       {
-        params: { pageNumber },
+        params: { page: pageNumber },
       }
     );
   }

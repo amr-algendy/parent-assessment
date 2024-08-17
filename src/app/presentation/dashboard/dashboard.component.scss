@@ -39,6 +39,7 @@
 .user-avatar {
   width: 70px;
   height: 70px;
+  object-fit: cover;
 }
 .user-name {
   color: $primary-text;
@@ -46,7 +47,7 @@
   font-size: 16px;
 }
 .action-buttons-cell {
-  width: 220px;
+  width: 180px;
   align-content: center;
 }
 .action-buttons {

@@ -48,11 +48,11 @@
                 >
                   <i class="bi-pencil-fill"></i>
                 </button>
-                <button class="btn btn-outline-primary me-1">
+                <button
+                  class="btn btn-outline-primary me-1"
+                  (click)="deleteUser(idx)"
+                >
                   <i class="bi-trash-fill"></i>
-                </button>
-                <button class="btn ms-auto chevron-button">
-                  <i class="bi-chevron-right"></i>
                 </button>
               </div>
             </td>
@@ -60,7 +60,11 @@
           <tr>
             <td [colSpan]="2">
               <div class="text-center">
-                <button *ngIf="!loading" class="btn btn-primary">
+                <button
+                  *ngIf="!loading && lastLoadedPage < maxPages"
+                  (click)="getUsers()"
+                  class="btn btn-primary"
+                >
                   Load more
                 </button>
                 <i *ngIf="loading" class="bi-arrow-repeat loader"></i>
@@ -69,24 +73,6 @@
           </tr>
         </tbody>
       </table>
-      <!-- <div class="user-details">
-        <button class="btn">X</button>
-        <img [src]="selectedUserData.avatar" alt="" />
-        <h2>
-          {{ selectedUserData.firstName }} {{ selectedUserData.lastName }}
-        </h2>
-
-        <div class="user-action-buttons">
-          <button class="btn btn-primary">
-            <i class="bi-pencil-fill"></i>
-            Edit
-          </button>
-          <button class="btn btn-outline-primary">
-            <i class="bi-trash-fill"></i>
-            Delete
-          </button>
-        </div>
-      </div> -->
     </div>
   </div>
 </div>
@@ -94,6 +80,13 @@
 <app-user-modal
   *ngIf="users[editedUserIndex]"
   [editedUser]="users[editedUserIndex]"
-  (closeModal)="onCloseModal()"
+  (closeModal)="onCloseEditModal()"
   (confirmEdit)="onConfirmEdit($event)"
 ></app-user-modal>
+
+<app-delete-user-modal
+  *ngIf="users[userIndexToDelete]"
+  [user]="users[userIndexToDelete]"
+  (closeModal)="onCloseDeleteModal($event)"
+>
+</app-delete-user-modal>
