@@ -1,0 +1,67 @@
+@import "../../../assets/scss/colors";
+
+.page-header {
+  background-color: $page-header-background;
+  height: 112px;
+}
+.breadcrumb-item {
+  color: $primary;
+  font-size: 14px;
+}
+.page-title {
+  color: $primary-text;
+  font-weight: 300;
+}
+.page-content {
+  background-color: $page-background;
+  min-height: calc(100vh - 112px - 56px);
+}
+.table-wrapper {
+  background-color: #fff;
+}
+.table-header {
+  color: $secondary-text;
+  font-weight: 200;
+  font-size: 14px;
+  overflow: hidden;
+  position: relative;
+}
+.user-details {
+  position: absolute;
+  width: 300px;
+}
+.user-row:hover {
+  cursor: pointer;
+  td {
+    background-color: $primary-hover-bg;
+  }
+}
+.user-avatar {
+  width: 70px;
+  height: 70px;
+}
+.user-name {
+  color: $primary-text;
+  font-weight: 300;
+  font-size: 16px;
+}
+.action-buttons-cell {
+  width: 220px;
+  align-content: center;
+}
+.action-buttons {
+  display: flex;
+}
+.chevron-button {
+  color: $primary;
+}
+.loader {
+  color: $primary;
+  font-size: 32px;
+  animation: spinner 2s infinite;
+}
+@keyframes spinner {
+  100% {
+    transform: rotate(360deg);
+  }
+}
